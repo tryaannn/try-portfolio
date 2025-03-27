@@ -171,4 +171,88 @@ themeButton.addEventListener('click', () => {
     // We save the theme and the current icon that the user chose
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
-})
+});
+
+/*==================== ANIMATED TEXT TYPING ====================*/
+document.addEventListener('DOMContentLoaded', function() {
+    // Only initialize if the element exists
+    if (document.querySelector('.auto-input')) {
+        var typed = new Typed(".auto-input", {
+            strings: [
+                "a Student",
+                "a Web Developer",
+                "an UI Designer",
+            ],
+            typeSpeed: 100,
+            backSpeed: 100,
+            loop: true,
+        });
+    }
+});
+
+/*==================== FORM VALIDATION ====================*/
+$(document).ready(function() {
+    // Only initialize if the form exists
+    if ($("#contact-form").length) {
+        $("#contact-form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                telepon: {
+                    required: true,
+                    number: true
+                },
+                message: {
+                    required: true,
+                    minlength: 10
+                }
+            },
+            messages: {
+                name: {
+                    required: "Please enter your name",
+                    minlength: "Name must be at least 3 characters long"
+                },
+                email: {
+                    required: "Please enter your email address",
+                    email: "Please enter a valid email address"
+                },
+                telepon: {
+                    required: "Please enter your phone number",
+                    number: "Please enter a valid phone number"
+                },
+                message: {
+                    required: "Please enter your message",
+                    minlength: "Message must be at least 10 characters long"
+                }
+            },
+            errorElement: "span",
+            errorClass: "error-message",
+            highlight: function(element) {
+                $(element).addClass("input-error");
+            },
+            unhighlight: function(element) {
+                $(element).removeClass("input-error");
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    }
+});
+
+/*==================== ANIMATE ON SCROLL ====================*/
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            offset: 300,
+            duration: 2000
+        });
+    }
+});

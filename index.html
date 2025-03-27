@@ -677,8 +677,8 @@
                         </div>
                     </div>
                     <div class="contact__content">
-                        <label for="project" class="contact__label">Project</label>
-                        <input name="project" id="project" type="text" class="contact__input">
+                        <label for="telepon" class="contact__label">Telepon</label>
+                        <input name="telepom" id="telepon" type="tel" class="contact__input">
                     </div>
                     <div class="contact__content">
                         <label for="message" class="contact__label">Message</label>
@@ -744,83 +744,18 @@
     <!--==================== SWIPER JS ====================-->
     <script src="js/swiper-bundle.min.js"></script>
 
-    <!--==================== MAIN JS ====================-->
-    <script src="js/main.js"></script>
-
     <!--=================== Animated text ===============-->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script>
-        var typed = new Typed(".auto-input", {
-            strings: [
-                "a Student",
-                "a Web Developer",
-                "an UI Designer",
-            ],
-            typeSpeed: 100,
-            backSpeed: 100,
-            loop: true,
-        });
-    </script>
 
     <!-- jQuery and jQuery Validation Plugin -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
-    <!-- Form Validation Script -->
-    <script>
-        $(document).ready(function() {
-            $("#contact-form").validate({
-                rules: {
-                    name: {
-                        required: true,
-                        minlength: 3
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    message: {
-                        required: true,
-                        minlength: 10
-                    }
-                },
-                messages: {
-                    name: {
-                        required: "Please enter your name",
-                        minlength: "Name must be at least 3 characters long"
-                    },
-                    email: {
-                        required: "Please enter your email address",
-                        email: "Please enter a valid email address"
-                    },
-                    message: {
-                        required: "Please enter your message",
-                        minlength: "Message must be at least 10 characters long"
-                    }
-                },
-                errorElement: "span",
-                errorClass: "error-message",
-                highlight: function(element) {
-                    $(element).addClass("input-error");
-                },
-                unhighlight: function(element) {
-                    $(element).removeClass("input-error");
-                },
-                submitHandler: function(form) {
-                    form.submit();
-                }
-            });
-        });
-    </script>
-
     <!--=================== Animate scroll js ===============-->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            offset: 300,
-            duration: 2000
-        });
-    </script>    
+
+    <!--==================== MAIN JS ====================-->
+    <script src="js/main.js"></script>
 
 </body>
 
