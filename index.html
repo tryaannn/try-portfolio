@@ -512,7 +512,7 @@
                     </div>
                     <!--==================== PORTFOLIO 2 ====================-->
                     <div class="portfolio__content grid swiper-slide">
-                        <img src="assets/img/portfolio2.png" alt="" class="portfolio__img">
+                        <img src="assets/img/Portfolio2.png" alt="" class="portfolio__img">
 
                         <div class="portfolio__data">
                             <h3 class="portfolio__title">TransformLab</h3>
@@ -660,7 +660,7 @@
                     </div>
                 </div>
         
-                <form action="https://formsubmit.co/tryapriyana@gmail.com" method="POST" class="contact__form grid">
+                <form action="https://formsubmit.co/tryapriyana@gmail.com" method="POST" class="contact__form grid" id="contact-form">
                     <!-- Add these hidden fields for FormSubmit configuration -->
                     <input type="hidden" name="_subject" value="New portfolio contact message!">
                     <input type="hidden" name="_captcha" value="false">
@@ -759,6 +759,57 @@
             typeSpeed: 100,
             backSpeed: 100,
             loop: true,
+        });
+    </script>
+
+    <!-- jQuery and jQuery Validation Plugin -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+    <!-- Form Validation Script -->
+    <script>
+        $(document).ready(function() {
+            $("#contact-form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 3
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    message: {
+                        required: true,
+                        minlength: 10
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter your name",
+                        minlength: "Name must be at least 3 characters long"
+                    },
+                    email: {
+                        required: "Please enter your email address",
+                        email: "Please enter a valid email address"
+                    },
+                    message: {
+                        required: "Please enter your message",
+                        minlength: "Message must be at least 10 characters long"
+                    }
+                },
+                errorElement: "span",
+                errorClass: "error-message",
+                highlight: function(element) {
+                    $(element).addClass("input-error");
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass("input-error");
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
         });
     </script>
 

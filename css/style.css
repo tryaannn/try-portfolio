@@ -806,6 +806,7 @@ img {
   background-color: var(--input-color);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem 0.25rem;
+  position: relative;
 }
 
 .contact__label {
@@ -822,6 +823,17 @@ img {
   border: none;
   outline: none;
   padding: 0.25rem 0.5rem 0.5rem 0;
+}
+
+.input-error {
+  border-color: #ff6b6b !important;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.75rem;
+  margin-top: 5px;
+  display: block;
 }
 
 /*==================== FOOTER ====================*/
