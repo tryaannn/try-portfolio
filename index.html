@@ -666,12 +666,8 @@
                     </div>
                 </div>
         
-                <form action="https://formsubmit.co/tryapriyana@gmail.com" method="POST" class="contact__form grid" id="contact-form">
-                    <!-- Add these hidden fields for FormSubmit configuration -->
-                    <input type="hidden" name="_subject" value="New portfolio contact message!">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html">
-                    
+                <!-- Contact Form with PHP Integration -->
+                <form action="process_form.php" method="POST" class="contact__form grid" id="contact-form">
                     <div class="contact__inputs grid">
                         <div class="contact__content">
                             <label for="name" class="contact__label">Name</label>
@@ -684,7 +680,7 @@
                     </div>
                     <div class="contact__content">
                         <label for="telepon" class="contact__label">Telepon</label>
-                        <input name="telepom" id="telepon" type="tel" class="contact__input">
+                        <input name="telepon" id="telepon" type="tel" class="contact__input">
                     </div>
                     <div class="contact__content">
                         <label for="message" class="contact__label">Message</label>
@@ -696,6 +692,14 @@
                             Send Message
                             <i class="uil uil-message button__icon"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Response Messages -->
+                    <div id="form-message-success" class="mt-4" style="display: none; color: var(--first-color);">
+                        <i class="uil uil-check-circle"></i> Your message has been sent successfully!
+                    </div>
+                    <div id="form-message-error" class="mt-4" style="display: none; color: #ff6b6b;">
+                        <i class="uil uil-exclamation-circle"></i> <span id="error-text">There was an error sending your message.</span>
                     </div>
                 </form>
             </div>
@@ -765,6 +769,72 @@
 
     <!--==================== MAIN JS ====================-->
     <script src="js/main.js"></script>
+    
+    <!-- Contact Form AJAX Script -->
+    <script>
+        $(document).ready(function() {
+            // Check for contact status in URL (for non-AJAX form submissions)
+            const urlParams = new URLSearchParams(window.location.search);
+            const contactStatus = urlParams.get('contact_status');
+            
+            if (contactStatus === 'success') {
+                $('#form-message-success').show();
+                setTimeout(function() {
+                    $('#form-message-success').fadeOut();
+                }, 5000);
+            } else if (contactStatus === 'error') {
+                const errorMessage = urlParams.get('message') || 'There was an error sending your message.';
+                $('#error-text').text(errorMessage);
+                $('#form-message-error').show();
+                setTimeout(function() {
+                    $('#form-message-error').fadeOut();
+                }, 5000);
+            }
+            
+            // AJAX form submission
+            $('#contact-form').submit(function(e) {
+                e.preventDefault();
+                
+                const form = $(this);
+                const formData = form.serialize();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            form[0].reset();
+                            $('#form-message-success').show();
+                            $('#form-message-error').hide();
+                            setTimeout(function() {
+                                $('#form-message-success').fadeOut();
+                            }, 5000);
+                        } else {
+                            $('#error-text').text(response.message || 'There was an error sending your message.');
+                            $('#form-message-error').show();
+                            $('#form-message-success').hide();
+                            setTimeout(function() {
+                                $('#form-message-error').fadeOut();
+                            }, 5000);
+                        }
+                    },
+                    error: function() {
+                        $('#error-text').text('There was a connection error. Please try again later.');
+                        $('#form-message-error').show();
+                        $('#form-message-success').hide();
+                        setTimeout(function() {
+                            $('#form-message-error').fadeOut();
+                        }, 5000);
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
