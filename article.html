@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Web Development Techniques - Try Nugraha</title>
+    <!--==================== UNICONS ====================-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <!--==================== BOOTSTRAP ====================-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--==================== SWIPER CSS ====================-->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css" />
+    <!--==================== CSS ====================-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="assets/img/profile.png" type="image/png">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <style>
+        /* Article Styles */
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .article-category {
+            background-color: var(--first-color-lighter);
+            color: var(--first-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: var(--smaller-font-size);
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .article-title {
+            font-size: var(--h1-font-size);
+            color: var(--title-color);
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color-light);
+            font-size: var(--small-font-size);
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            margin: 0 0.75rem;
+        }
+        
+        .article-meta-item i {
+            margin-right: 0.25rem;
+        }
+        
+        .article-featured-img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .article-content {
+            font-size: var(--normal-font-size);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .article-content h2 {
+            color: var(--title-color);
+            font-size: var(--h2-font-size);
+            margin: 2rem 0 1rem;
+        }
+        
+        .article-content h3 {
+            color: var(--title-color);
+            font-size: var(--h3-font-size);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            margin-left: 1.5rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .article-content code {
+            background-color: var(--input-color);
+            color: var(--first-color);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+        }
+        
+        .article-content pre {
+            background-color: var(--input-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .article-share {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--text-color-light);
+        }
+        
+        .article-share-title {
+            margin-right: 1rem;
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+        }
+        
+        .article-share-item {
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--first-color-lighter);
+            color: var(--first-color);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: 0.3s;
+        }
+        
+        .article-share-item:hover {
+            background-color: var(--first-color);
+            color: #fff;
+        }
+        
+        .article-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--text-color-light);
+        }
+        
+        .article-navigation-item {
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+            font-weight: var(--font-medium);
+            transition: 0.3s;
+            max-width: 45%;
+        }
+        
+        .article-navigation-item:hover {
+            color: var(--first-color);
+        }
+        
+        .article-navigation-title {
+            font-size: var(--small-font-size);
+        }
+        
+        .article-recommendations {
+            margin-bottom: 3rem;
+        }
+        
+        .article-recommendations-title {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .recommendation-card {
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recommendation-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .recommendation-card-body {
+            padding: 1.25rem;
+        }
+        
+        .recommendation-date {
+            color: var(--text-color-light);
+            font-size: var(--small-font-size);
+            margin-bottom: 0.5rem;
+        }
+        
+        .recommendation-title {
+            color: var(--title-color);
+            font-size: var(--normal-font-size);
+            font-weight: var(--font-medium);
+            margin-bottom: 0.5rem;
+        }
+        
+        .comments-section {
+            margin-bottom: 3rem;
+        }
+        
+        .comments-title {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            margin-bottom: 2rem;
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--text-color-light);
+        }
+        
+        .comment-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1.5rem;
+            object-fit: cover;
+        }
+        
+        .comment-info {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        
+        .comment-name {
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+        }
+        
+        .comment-date {
+            color: var(--text-color-light);
+            font-size: var(--small-font-size);
+        }
+        
+        .comment-content {
+            margin-bottom: 0.75rem;
+        }
+        
+        .comment-reply {
+            color: var(--first-color);
+            font-weight: var(--font-medium);
+            cursor: pointer;
+        }
+        
+        .comment-form-title {
+            font-size: var(--h3-font-size);
+            color: var(--title-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .comment-form textarea {
+            background-color: var(--input-color);
+            border: none;
+            outline: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: var(--text-color);
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo">Try Nugraha</a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list grid">
+                    <li class="nav__items">
+                        <a href="index.html#home" class="nav__link">
+                            <i class="uil uil-estate nav__icon"></i> Home
+                        </a>
+                    </li>
+
+                    <li class="nav__items">
+                        <a href="index.html#about" class="nav__link">
+                            <i class="uil uil-user nav__icon"></i> About
+                        </a>
+                    </li>
+
+                    <li class="nav_items">
+                        <a href="index.html#skills" class="nav__link">
+                            <i class="uil uil-file nav__icon"></i> Skills
+                        </a>
+                    </li>
+
+                    <li class="nav__items">
+                        <a href="index.html#services" class="nav__link">
+                            <i class="uil uil-briefcase-alt nav__icon"></i> Services
+                        </a>
+                    </li>
+
+                    <li class="nav__items">
+                        <a href="index.html#portfolio" class="nav__link">
+                            <i class="uil uil-scenery nav__icon"></i> Portfolio
+                        </a>
+                    </li>
+
+                    <li class="nav__items">
+                        <a href="blog.html" class="nav__link active-link">
+                            <i class="uil uil-document-layout-center nav__icon"></i> Blog
+                        </a>
+                    </li>
+
+                    <li class="nav__items">
+                        <a href="index.html#contact" class="nav__link">
+                            <i class="uil uil-message nav__icon"></i> Contact me
+                        </a>
+                    </li>
+                </ul>
+                <i class="uil uil-times nav__close" id="nav-close"></i>
+            </div>
+
+            <div class="nav__btns">
+                <!--Theme Change button-->
+                <i class="uil uil-moon change-theme" id="theme-button"></i>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="uil uil-apps"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <section class="section article">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <!-- Article Header -->
+                        <div class="article-header" data-aos="fade-up">
+                            <span class="article-category">Web Development</span>
+                            <h1 class="article-title">Modern Web Development Techniques</h1>
+                            <div class="article-meta">
+                                <div class="article-meta-item">
+                                    <i class="uil uil-user"></i>
+                                    <span>Try Nugraha</span>
+                                </div>
+                                <div class="article-meta-item">
+                                    <i class="uil uil-calendar-alt"></i>
+                                    <span>20 Apr 2025</span>
+                                </div>
+                                <div class="article-meta-item">
+                                    <i class="uil uil-comment"></i>
+                                    <span>5 Comments</span>
+                                </div>
+                            </div>
+
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" alt="Web Development" class="article-featured-img">
+                        </div>
+
+                        <!-- Article Content -->
+                        <div class="article-content" data-aos="fade-up" data-aos-delay="100">
+                            <p>
+                                The landscape of web development is constantly evolving, with new technologies, frameworks, and methodologies emerging regularly. Staying updated with these advancements is crucial for developers who want to create efficient, scalable, and user-friendly web applications. This article explores some of the modern web development techniques that are transforming the industry.
+                            </p>
+
+                            <h2>1. JavaScript Frameworks and Libraries</h2>
+                            <p>
+                                JavaScript frameworks and libraries continue to dominate the front-end development landscape. React, Angular, and Vue.js remain the top choices for building dynamic user interfaces. These frameworks offer component-based architecture, which promotes reusability and makes code maintenance easier.
+                            </p>
+                            <p>
+                                React, developed by Facebook, has gained immense popularity due to its virtual DOM implementation, which optimizes rendering performance. It also has a thriving ecosystem with libraries like Redux for state management.
+                            </p>
+                            <p>
+                                Here's a simple example of a React component:
+                            </p>
+                            <pre><code>import React from 'react';
+
+const Greeting = ({ name }) => {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
+      &lt;p&gt;Welcome to our website.&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default Greeting;</code></pre>
+
+                            <h2>2. Progressive Web Apps (PWAs)</h2>
+                            <p>
+                                Progressive Web Apps bridge the gap between web and mobile applications. They offer a native-like experience with features such as offline capability, push notifications, and home screen installation. PWAs leverage service workers to cache resources, enabling the application to function even without an internet connection.
+                            </p>
+                            <p>
+                                Major companies like Twitter, Starbucks, and Pinterest have implemented PWAs, resulting in significant improvements in user engagement and conversion rates.
+                            </p>
+
+                            <h2>3. JAMstack Architecture</h2>
+                            <p>
+                                JAMstack (JavaScript, APIs, and Markup) is a modern web development architecture that decouples the front-end from the back-end. It focuses on pre-rendering pages and serving them as static HTML, which is then enhanced with JavaScript for interactivity.
+                            </p>
+                            <p>
+                                This approach offers several benefits, including improved performance, better security, and simpler scaling. Static site generators like Gatsby, Next.js, and Hugo are popular tools for implementing JAMstack architecture.
+                            </p>
+
+                            <h2>4. GraphQL for API Queries</h2>
+                            <p>
+                                GraphQL has emerged as a powerful alternative to REST for API queries. Developed by Facebook, GraphQL allows clients to request exactly the data they need, reducing over-fetching and under-fetching problems common with REST APIs.
+                            </p>
+                            <p>
+                                With GraphQL, you can retrieve multiple resources in a single request and specify the exact fields you want, making it particularly useful for applications with complex data requirements.
+                            </p>
+                            <pre><code>query {
+  user(id: "123") {
+    name
+    email
+    posts {
+      title
+      publishedDate
+    }
+  }
+}</code></pre>
+
+                            <h2>5. Containerization and Microservices</h2>
+                            <p>
+                                Containerization, particularly using Docker, has revolutionized application deployment. Containers package an application with all its dependencies, ensuring consistent behavior across different environments.
+                            </p>
+                            <p>
+                                Microservices architecture complements containerization by breaking down applications into small, independently deployable services. This approach enhances scalability and allows teams to work on different services simultaneously.
+                            </p>
+
+                            <h2>Conclusion</h2>
+                            <p>
+                                The web development field continues to evolve at a rapid pace, with new techniques and technologies emerging constantly. By adopting these modern approaches, developers can create more efficient, scalable, and user-friendly web applications.
+                            </p>
+                            <p>
+                                It's essential for developers to stay updated with these advancements and continuously learn new skills. The future of web development looks promising, with technologies like WebAssembly, Serverless architectures, and AI-driven development tools on the horizon.
+                            </p>
+                        </div>
+
+                        <!-- Article Share -->
+                        <div class="article-share" data-aos="fade-up">
+                            <div class="article-share-title">Share this article:</div>
+                            <a href="#" class="article-share-item"><i class="uil uil-facebook-f"></i></a>
+                            <a href="#" class="article-share-item"><i class="uil uil-twitter"></i></a>
+                            <a href="#" class="article-share-item"><i class="uil uil-linkedin"></i></a>
+                            <a href="#" class="article-share-item"><i class="uil uil-envelope"></i></a>
+                        </div>
+
+                        <!-- Article Navigation -->
+                        <div class="article-navigation" data-aos="fade-up">
+                            <a href="article.html?id=2" class="article-navigation-item">
+                                <i class="uil uil-arrow-left me-2"></i>
+                                <div>
+                                    <div>Previous Article</div>
+                                    <div class="article-navigation-title">UI Design Principles for Developers</div>
+                                </div>
+                            </a>
+                            <a href="article.html?id=3" class="article-navigation-item">
+                                <div class="text-end">
+                                    <div>Next Article</div>
+                                    <div class="article-navigation-title">Getting Started with React Hooks</div>
+                                </div>
+                                <i class="uil uil-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+
+                        <!-- Article Recommendations -->
+                        <div class="article-recommendations" data-aos="fade-up">
+                            <h3 class="article-recommendations-title">You might also like</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="recommendation-card">
+                                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3" alt="UI Design">
+                                        <div class="recommendation-card-body">
+                                            <div class="recommendation-date">15 MAY 2025</div>
+                                            <h4 class="recommendation-title">UI Design Principles for Developers</h4>
+                                            <a href="article.html?id=2" class="read-more">
+                                                Read More <i class="uil uil-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="recommendation-card">
+                                        <img src="https://images.unsplash.com/photo-1593720213428-28a5b9e94613" alt="React">
+                                        <div class="recommendation-card-body">
+                                            <div class="recommendation-date">03 MAY 2023</div>
+                                            <h4 class="recommendation-title">Getting Started with React Hooks</h4>
+                                            <a href="article.html?id=3" class="read-more">
+                                                Read More <i class="uil uil-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="recommendation-card">
+                                        <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3" alt="Responsive Design">
+                                        <div class="recommendation-card-body">
+                                            <div class="recommendation-date">22 APR 2023</div>
+                                            <h4 class="recommendation-title">Responsive Design Best Practices</h4>
+                                            <a href="article.html?id=4" class="read-more">
+                                                Read More <i class="uil uil-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="comments-section" data-aos="fade-up">
+                            <h3 class="comments-title">5 Comments</h3>
+                            
+                            <div class="comment">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User Avatar" class="comment-avatar">
+                                <div class="comment-info">
+                                    <div class="comment-header">
+                                        <div class="comment-name">John Doe</div>
+                                        <div class="comment-date">10 Jun 2023</div>
+                                    </div>
+                                    <div class="comment-content">
+                                        Great article! I've been using React for a few years now, and it's definitely changed the way I approach front-end development. Would love to see more content on GraphQL in the future.
+                                    </div>
+                                    <div class="comment-reply">Reply</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User Avatar" class="comment-avatar">
+                                <div class="comment-info">
+                                    <div class="comment-header">
+                                        <div class="comment-name">Jane Smith</div>
+                                        <div class="comment-date">09 Jun 2023</div>
+                                    </div>
+                                    <div class="comment-content">
+                                        I've been hearing a lot about JAMstack lately. Do you think it's suitable for large-scale applications, or is it more for smaller projects?
+                                    </div>
+                                    <div class="comment-reply">Reply</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="User Avatar" class="comment-avatar">
+                                <div class="comment-info">
+                                    <div class="comment-header">
+                                        <div class="comment-name">Michael Johnson</div>
+                                        <div class="comment-date">08 Jun 2023</div>
+                                    </div>
+                                    <div class="comment-content">
+                                        I've been exploring PWAs recently and have been impressed with the performance improvements. It's amazing how much better the user experience can be with just a few optimizations.
+                                    </div>
+                                    <div class="comment-reply">Reply</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User Avatar" class="comment-avatar">
+                                <div class="comment-info">
+                                    <div class="comment-header">
+                                        <div class="comment-name">Emily Davis</div>
+                                        <div class="comment-date">08 Jun 2023</div>
+                                    </div>
+                                    <div class="comment-content">
+                                        Could you elaborate more on the security benefits of JAMstack? I'm particularly interested in how it compares to traditional server-rendered applications in terms of security.
+                                    </div>
+                                    <div class="comment-reply">Reply</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment">
+                                <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="User Avatar" class="comment-avatar">
+                                <div class="comment-info">
+                                    <div class="comment-header">
+                                        <div class="comment-name">Robert Wilson</div>
+                                        <div class="comment-date">07 Jun 2023</div>
+                                    </div>
+                                    <div class="comment-content">
+                                        Docker and containerization have completely transformed our deployment process. It's so much easier to manage dependencies and ensure consistent environments now.
+                                    </div>
+                                    <div class="comment-reply">Reply</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comment Form -->
+                        <div class="comment-form" data-aos="fade-up">
+                            <h3 class="comment-form-title">Leave a Comment</h3>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <input type="text" class="contact__input" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="contact__input" placeholder="Your Email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea rows="5" class="contact__input" placeholder="Your Comment" required></textarea>
+                                </div>
+                                <button type="submit" class="button button--flex">
+                                    Post Comment <i class="uil uil-message button__icon"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--==================== FOOTER ====================-->
+    <footer class="footer">
+        <div class="footer__bg">
+            <div class="footer__container container grid">
+                <div>
+                    <h1 class="footer__title">Try Nugraha</h1>
+                    <span class="footer__subtitle">Frontend Developer</span>
+                </div>
+
+                <ul class="footer__links">
+                    <li>
+                        <a href="index.html#services" class="footer__link">Services</a>
+                    </li>
+                    <li>
+                        <a href="index.html#portfolio" class="footer__link">Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="blog.html" class="footer__link">Blog</a>
+                    </li>
+                    <li>
+                        <a href="index.html#contact" class="footer__link">Contact me</a>
+                    </li>
+                </ul>
+
+                <div class="footer__socials">
+                    <a href="https://www.instagram.com/tryaannn_"
+                        target="_blank" class="footer__social">
+                        <i class="uil uil-instagram"></i></a>
+                    </a>
+
+                    <a href="https://github.com/tryaannn" target="_blank" class="footer__social">
+                        <i class="uil uil-github-alt"></i></a>
+                    </a>
+
+                    <a href="https://x.com/3nugrahaaa_" target="_blank" class="footer__social">
+                        <i class="uil uil-twitter-alt"></i></a>
+                    </a>
+                </div>
+            </div>
+            <p class="footer__copy">&copy; 2025 Try Nugraha | All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!--==================== SCROLL TOP ====================-->
+    <div><a href="#" class="scrollup" id="scroll-up">
+            <i class="uil uil-arrow-up scrollup__icon"></i>
+        </a></div>
+
+    <!--==================== SWIPER JS ====================-->
+    <script src="js/swiper-bundle.min.js"></script>
+
+    <!--=================== Animated text ===============-->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!--==================== BOOTSTRAP JS ====================-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery and jQuery Validation Plugin -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+    <!--=================== Animate scroll js ===============-->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <!--==================== MAIN JS ====================-->
+    <script src="js/main.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Handle article query parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get article ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id') || '1';
+            
+            // You could use the articleId to fetch the correct article content
+            // For now, we'll just change the title based on the ID
+            const titleMap = {
+                '1': 'Modern Web Development Techniques',
+                '2': 'UI Design Principles for Developers',
+                '3': 'Getting Started with React Hooks',
+                '4': 'Responsive Design Best Practices'
+            };
+            
+            // Update page title if needed
+            if (titleMap[articleId] && articleId !== '1') {
+                document.title = titleMap[articleId] + ' - Try Nugraha';
+                document.querySelector('.article-title').textContent = titleMap[articleId];
+            }
+            
+            // Update navigation links based on article ID
+            updateNavigation(articleId);
+        });
+        
+        function updateNavigation(currentId) {
+            const prevId = parseInt(currentId) - 1;
+            const nextId = parseInt(currentId) + 1;
+            
+            // Update previous article link
+            const prevLink = document.querySelector('.article-navigation-item:first-child');
+            if (prevId < 1) {
+                prevLink.style.visibility = 'hidden';
+            } else {
+                prevLink.href = `article.html?id=${prevId}`;
+            }
+            
+            // Update next article link
+            const nextLink = document.querySelector('.article-navigation-item:last-child');
+            if (nextId > 4) {
+                nextLink.style.visibility = 'hidden';
+            } else {
+                nextLink.href = `article.html?id=${nextId}`;
+            }
+        }
+    </script>
+</body>
+</html>

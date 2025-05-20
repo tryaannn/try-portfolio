@@ -27,6 +27,7 @@ function linkAction() {
     navMenu.classList.remove('show-menu')
 }
 navLink.forEach(n => n.addEventListener('click', linkAction))
+
 /*==================== ACCORDION SKILLS ====================*/
 const skillsContent = document.getElementsByClassName('skills__content'),
     skillsHeader = document.querySelectorAll('.skills__header')
@@ -45,9 +46,6 @@ function toggleSkills() {
 skillsHeader.forEach((el) => {
     el.addEventListener('click', toggleSkills)
 })
-
-/*==================== QUALIFICATION TABS ====================*/
-
 
 /*==================== SERVICES MODAL ====================*/
 const modalViews = document.querySelectorAll('.services__modal'),
@@ -71,37 +69,46 @@ modalCloses.forEach((modalClose) => {
         })
     })
 })
+
 /*==================== PORTFOLIO SWIPER  ====================*/
-let swiperPortfolio = new Swiper('.portfolio__container', {
-    cssMode: true,
-    loop: true,
+let portfolioSwiper = null;
+let testimonialSwiper = null;
 
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-});
+// Initialize the swipers only if the elements exist
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Portfolio Swiper
+    if (document.querySelector('.portfolio__container')) {
+        portfolioSwiper = new Swiper('.portfolio__container', {
+            cssMode: true,
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    }
 
-/*==================== TESTIMONIAL ====================*/
-let swiperTestimonial = new Swiper('.testimonial__container', {
-    loop: true,
-    grabCursor: true,
-    spaceBetween: 48,
-
-
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        dynamicBullets: true,
-    },
-    breakpoints:{
-        568:{
-            slidesPerview: 2,
-        }
+    // Initialize Testimonial Swiper
+    if (document.querySelector('.testimonial__container')) {
+        testimonialSwiper = new Swiper('.testimonial__container', {
+            loop: true,
+            grabCursor: true,
+            spaceBetween: 48,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            breakpoints:{
+                568:{
+                    slidesPerView: 2,
+                }
+            }
+        });
     }
 });
 
@@ -111,15 +118,19 @@ const sections = document.querySelectorAll('section[id]')
 function scrollActive(){
     const scrollY = window.pageYOffset
 
-    sections.forEach(current =>{
+    sections.forEach(current => {
         const sectionHeight = current.offsetHeight
         const sectionTop = current.offsetTop - 50;
-        sectionId = current.getAttribute('id')
+        const sectionId = current.getAttribute('id')
 
         if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
-        }else{
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
+            const activeLink = document.querySelector('.nav__menu a[href*=' + sectionId + ']');
+            if (activeLink) {
+                document.querySelectorAll('.nav__menu a').forEach(link => {
+                    link.classList.remove('active-link');
+                });
+                activeLink.classList.add('active-link');
+            }
         }
     })
 }
@@ -133,7 +144,6 @@ function scrollHeader(){
 }
 window.addEventListener('scroll', scrollHeader)
 
-
 /*==================== SHOW SCROLL UP ====================*/
 function scrollUp(){
     const scrollUp = document.getElementById('scroll-up');
@@ -141,7 +151,6 @@ function scrollUp(){
     if(this.scrollY >= 560) scrollUp.classList.add('show-scroll'); else scrollUp.classList.remove('show-scroll')
 }
 window.addEventListener('scroll', scrollUp)
-
 
 /*==================== DARK LIGHT THEME ====================*/ 
 const themeButton = document.getElementById('theme-button')
@@ -191,68 +200,210 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /*==================== FORM VALIDATION ====================*/
-$(document).ready(function() {
-    // Only initialize if the form exists
-    if ($("#contact-form").length) {
-        $("#contact-form").validate({
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 3
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if jQuery and jQuery Validate are available
+    if (typeof $ !== 'undefined' && $.fn.validate) {
+        // Only initialize if the form exists
+        if ($("#contact-form").length) {
+            $("#contact-form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 3
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    telepon: {
+                        required: true,
+                        number: true
+                    },
+                    message: {
+                        required: true,
+                        minlength: 10
+                    }
                 },
-                email: {
-                    required: true,
-                    email: true
+                messages: {
+                    name: {
+                        required: "Please enter your name",
+                        minlength: "Name must be at least 3 characters long"
+                    },
+                    email: {
+                        required: "Please enter your email address",
+                        email: "Please enter a valid email address"
+                    },
+                    telepon: {
+                        required: "Please enter your phone number",
+                        number: "Please enter a valid phone number"
+                    },
+                    message: {
+                        required: "Please enter your message",
+                        minlength: "Message must be at least 10 characters long"
+                    }
                 },
-                telepon: {
-                    required: true,
-                    number: true
+                errorElement: "span",
+                errorClass: "error-message",
+                highlight: function(element) {
+                    $(element).addClass("input-error");
                 },
-                message: {
-                    required: true,
-                    minlength: 10
+                unhighlight: function(element) {
+                    $(element).removeClass("input-error");
+                },
+                submitHandler: function(form) {
+                    form.submit();
                 }
-            },
-            messages: {
-                name: {
-                    required: "Please enter your name",
-                    minlength: "Name must be at least 3 characters long"
-                },
-                email: {
-                    required: "Please enter your email address",
-                    email: "Please enter a valid email address"
-                },
-                telepon: {
-                    required: "Please enter your phone number",
-                    number: "Please enter a valid phone number"
-                },
-                message: {
-                    required: "Please enter your message",
-                    minlength: "Message must be at least 10 characters long"
-                }
-            },
-            errorElement: "span",
-            errorClass: "error-message",
-            highlight: function(element) {
-                $(element).addClass("input-error");
-            },
-            unhighlight: function(element) {
-                $(element).removeClass("input-error");
-            },
-            submitHandler: function(form) {
-                form.submit();
-            }
-        });
+            });
+        }
     }
 });
 
 /*==================== ANIMATE ON SCROLL ====================*/
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS
+    // Initialize AOS if it exists
     if (typeof AOS !== 'undefined') {
         AOS.init({
-            offset: 300,
-            duration: 2000
+            offset: 200,
+            duration: 1000,
+            once: true
         });
     }
 });
+
+/*==================== BLOG FUNCTIONALITY ====================*/
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle article query parameters on article page
+    if (window.location.pathname.includes('article.html')) {
+        // Get article ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id') || '1';
+        
+        // Article data mapping (this would typically come from a backend)
+        const articleData = {
+            '1': {
+                title: 'Modern Web Development Techniques',
+                category: 'Web Development',
+                author: 'Try Nugraha',
+                date: '07 Jun 2023',
+                comments: 5,
+                image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97'
+            },
+            '2': {
+                title: 'UI Design Principles for Developers',
+                category: 'UI/UX Design',
+                author: 'Try Nugraha',
+                date: '15 May 2023',
+                comments: 3,
+                image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3'
+            },
+            '3': {
+                title: 'Getting Started with React Hooks',
+                category: 'React',
+                author: 'Try Nugraha',
+                date: '03 May 2023',
+                comments: 7,
+                image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613'
+            },
+            '4': {
+                title: 'Responsive Design Best Practices',
+                category: 'CSS',
+                author: 'Try Nugraha',
+                date: '22 Apr 2023',
+                comments: 2,
+                image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3'
+            }
+        };
+        
+        // Update page elements if article data is available
+        if (articleData[articleId]) {
+            const article = articleData[articleId];
+            
+            // Update page title and meta
+            document.title = article.title + ' - Try Nugraha';
+            
+            // Update article elements
+            const titleEl = document.querySelector('.article-title');
+            const categoryEl = document.querySelector('.article-category');
+            const authorEl = document.querySelector('.article-meta-item:nth-child(1) span');
+            const dateEl = document.querySelector('.article-meta-item:nth-child(2) span');
+            const commentsEl = document.querySelector('.article-meta-item:nth-child(3) span');
+            const imageEl = document.querySelector('.article-featured-img');
+            
+            if (titleEl) titleEl.textContent = article.title;
+            if (categoryEl) categoryEl.textContent = article.category;
+            if (authorEl) authorEl.textContent = article.author;
+            if (dateEl) dateEl.textContent = article.date;
+            if (commentsEl) commentsEl.textContent = article.comments + ' Comments';
+            if (imageEl) imageEl.src = article.image;
+        }
+        
+        // Update navigation links based on article ID
+        updateArticleNavigation(articleId);
+    }
+    
+    // Add active class to category filters on blog page
+    const categoryBadges = document.querySelectorAll('.category-badge');
+    if (categoryBadges.length) {
+        categoryBadges.forEach(badge => {
+            badge.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Remove active class from all badges
+                categoryBadges.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked badge
+                this.classList.add('active');
+                // Here you would typically filter posts based on category
+            });
+        });
+    }
+});
+
+function updateArticleNavigation(currentId) {
+    const prevId = parseInt(currentId) - 1;
+    const nextId = parseInt(currentId) + 1;
+    
+    // Update previous article link
+    const prevLink = document.querySelector('.article-navigation-item:first-child');
+    if (prevLink) {
+        if (prevId < 1) {
+            prevLink.style.visibility = 'hidden';
+        } else {
+            prevLink.href = `article.html?id=${prevId}`;
+            
+            // Update title based on previous article
+            const prevTitle = {
+                '1': 'Modern Web Development Techniques',
+                '2': 'UI Design Principles for Developers',
+                '3': 'Getting Started with React Hooks',
+                '4': 'Responsive Design Best Practices'
+            }[prevId];
+            
+            const prevTitleEl = prevLink.querySelector('.article-navigation-title');
+            if (prevTitleEl && prevTitle) {
+                prevTitleEl.textContent = prevTitle;
+            }
+        }
+    }
+    
+    // Update next article link
+    const nextLink = document.querySelector('.article-navigation-item:last-child');
+    if (nextLink) {
+        if (nextId > 4) {
+            nextLink.style.visibility = 'hidden';
+        } else {
+            nextLink.href = `article.html?id=${nextId}`;
+            
+            // Update title based on next article
+            const nextTitle = {
+                '1': 'Modern Web Development Techniques',
+                '2': 'UI Design Principles for Developers',
+                '3': 'Getting Started with React Hooks',
+                '4': 'Responsive Design Best Practices'
+            }[nextId];
+            
+            const nextTitleEl = nextLink.querySelector('.article-navigation-title');
+            if (nextTitleEl && nextTitle) {
+                nextTitleEl.textContent = nextTitle;
+            }
+        }
+    }
+}
